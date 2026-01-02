@@ -4,38 +4,56 @@ package auth.v1;
 
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
-import "users/v1/user.proto";
+import "proto/users/v1/user.proto";
 
 service AuthService {
   rpc SignUp(SignUpRequest) returns (SignUpResponse);
-  rpc ConfirmEmail(ConfirmEmailRequest) returns (google.protobuf.Empty);
   rpc SignIn(SignInRequest) returns (SignInResponse);
 }
 
 message SignUpRequest {
-  string id = 1;
-  string username = 2;
-  string email = 3;
-  optional string first_name = 4;
-  optional string last_name = 5;
-  string phone_number = 6;
-  optional string photo_url = 7;
-  optional string about_me = 12;
-  optional google.protobuf.Timestamp birth_date = 14;
-  string ConfirmationCode = 15;
+  string                    id                = 1;
+  string                    username          = 2;
+  string                    password          = 3;
+  string                    email             = 4;
+  string                    phone_number      = 5;
+  string                    confirmation_code = 6;
+  string                    ip_addr           = 7;
+  string                    device_info       = 8;
+  string                    first_name        = 9;
+  string                    last_name         = 10;
+  string                    photo_url         = 11;
+  string                    about_me          = 12;
+  google.protobuf.Timestamp birth_date        = 13;
 }
 
 message SignUpResponse {
-  users.v1.User user = 1;
-  string token = 2;
+  users.v1.User user    = 1;
+  AuthSession   session = 2;
 }
 
-message ConfirmEmailRequest { string email = 1; }
+message AuthSession {
+  string                    id            = 1;
+  int64                     user_id       = 2;
+  google.protobuf.Timestamp last_seen_at  = 3;
+  google.protobuf.Timestamp created_at    = 4;
+  bool                      is_long_lived = 5;
+  string                    location      = 6;
+  string                    ip_addr       = 7;
+  string                    device_info   = 8;
+}
 
 message SignInRequest {
   // login can be email or username
-  string login = 1;
-  string password = 2;
+  string login       = 1;
+  string password    = 2;
+  bool   remember_me = 3;
+  string ip_addr     = 4;
+  string device_info = 5;
 }
 
-message SignInResponse { string token = 1; }
+message SignInResponse {
+  users.v1.User user    = 1;
+  AuthSession   session = 2;
+	string confirmation_code = 3;
+}
