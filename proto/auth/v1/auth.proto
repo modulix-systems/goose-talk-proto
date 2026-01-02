@@ -2,9 +2,8 @@ syntax = "proto3";
 
 package auth.v1;
 
-import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
-import "proto/users/v1/user.proto";
+import "users/v1/user.proto";
 
 service AuthService {
   rpc SignUp(SignUpRequest) returns (SignUpResponse);
@@ -53,7 +52,7 @@ message SignInRequest {
 }
 
 message SignInResponse {
-  users.v1.User user    = 1;
-  AuthSession   session = 2;
-	string confirmation_code = 3;
+  users.v1.User user              = 1;
+  AuthSession   session           = 2;
+  string        confirmation_code = 3;
 }
