@@ -8,29 +8,31 @@ message User {
   int64 id = 1;
   string username = 2;
   string email = 3;
-  google.protobuf.Timestamp created_at = 6;
-  google.protobuf.Timestamp updated_at = 7;
-  TwoFactorAuth two_factor_auth = 8;
-  string first_name = 9;
-  string last_name = 10;
-  string about_me = 11;
-  string photo_url = 12;
-  google.protobuf.Timestamp birth_date = 13;
+  google.protobuf.Timestamp created_at = 4;
+  google.protobuf.Timestamp updated_at = 5;
+  TwoFactorAuth two_factor_auth = 6;
+  string first_name = 7;
+  string last_name = 8;
+  string about_me = 9;
+  string photo_url = 10;
+  google.protobuf.Timestamp birth_date = 11;
+  string phone_number = 12;
+  string language = 13;
 }
 
 message TwoFactorAuth {
-  enum TwoFATransport {
-    TWO_FA_TRANSPORT_UNSPECIFIED = 0;
-    TWO_FA_TRANSPORT_EMAIL = 1;
-    TWO_FA_TRANSPORT_SMS = 2;
-    TWO_FA_TRANSPORT_TELEGRAM = 3;
-    TWO_FA_TRANSPORT_TOTP = 4;
+  enum TwoFaMethod {
+    TWO_FA_METHOD_UNSPECIFIED = 0;
+    TWO_FA_METHOD_EMAIL = 1;
+    TWO_FA_METHOD_SMS = 2;
+    TWO_FA_METHOD_TELEGRAM = 3;
+    TWO_FA_METHOD_TOTP = 4;
   }
   // id of the user which twofa belongs to
   int64 user_id = 1;
 
   // delivery method (sms, email, telegram, totp, etc.)
-  TwoFATransport transport = 2;
+  TwoFaMethod method = 2;
 
   // could be user's telegram, email address, etc.
   // or optional depending on transport (can be derived from user entity)
